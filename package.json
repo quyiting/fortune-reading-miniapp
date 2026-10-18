@@ -1,0 +1,16 @@
+{
+  "name": "da-ke-bu-bi-suan",
+  "version": "0.2.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build:vendors": "node scripts/build-vendors.cjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "iztro": "2.6.3",
+    "lunar-javascript": "1.7.7",
+    "sharp": "0.35.5"
+  }
+}
