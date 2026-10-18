@@ -17,7 +17,7 @@
           disabled="{{isCasting}}"
           aria-pressed="{{selectedTopicId === item.id}}"
         >
-          <view class="chip-title">{{item.label}}</view>
+          <text class="chip-title">{{item.label}}</text>
         </button>
       </view>
     </view>
@@ -34,7 +34,7 @@
           disabled="{{isCasting}}"
           aria-pressed="{{selectedGuideId === item.id}}"
         >
-          <view class="guide-chip-title">{{item.label}}</view>
+          <text class="guide-chip-title">{{item.label}}</text>
         </button>
       </view>
     </view>
@@ -116,11 +116,11 @@
       <button class="secondary-button share-button" bindtap="handleDetailToggle" aria-expanded="{{showDetailedResult}}">
         {{showDetailedResult ? "收起详细排盘" : "展开详细排盘"}}
       </button>
-      <button class="primary-button share-button" bindtap="handlePosterOpen" loading="{{isPosterGenerating}}">
+      <button class="secondary-button share-button" bindtap="handlePosterOpen" loading="{{isPosterGenerating}}">
         生成海报
       </button>
     </view>
-    <button class="secondary-button record-new-button" bindtap="handleNewQuestion">问另一件事</button>
+    <button class="primary-button record-new-button" bindtap="handleNewQuestion">问另一件事</button>
     <view class="subtle-note">内容仅供娱乐与自我探索参考。</view>
   </view>
 
