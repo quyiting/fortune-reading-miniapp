@@ -3,6 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform: WeChat Mini Program](https://img.shields.io/badge/Platform-WeChat%20Mini%20Program-07C160.svg)](https://developers.weixin.qq.com/miniprogram/dev/framework/)
 
+**English overview:** A local-first WeChat Mini Program for daily fortune draws, I Ching, tarot, BaZi, and Zi Wei readings. Results and notes are saved on-device for later review.
+
 一个免费的原生微信小程序，提供今日一签、主题抽签、六爻、梅花、塔罗、八字、紫微与本机复盘记录。用轻量的传统文化阅读体验，给当下的问题留一句提醒，也给日后的自己留一份对照。
 
 **核心流程：抽签或问事 → 阅读简明结果 → 本机保存 → 回看原结果 → 补充回访或分享海报。**
