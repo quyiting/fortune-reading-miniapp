@@ -7,7 +7,7 @@ from urllib.parse import urlencode, quote
 from concurrent.futures import ThreadPoolExecutor
 import hashlib, html, json, re, subprocess, tempfile
 ROOT = Path(__file__).resolve().parents[1]
-USER_AGENT = 'DaKeBuBiSuan/0.2 (https://github.com/quyiting/da-ke-bu-bi-suan; asset provenance)'
+USER_AGENT = 'DaKeBuBiSuan/0.2 (https://github.com/quyiting/fortune-reading-miniapp; asset provenance)'
 def get(url):
     with urlopen(Request(url, headers={'User-Agent': USER_AGENT}), timeout=35) as response:
         return response.read()

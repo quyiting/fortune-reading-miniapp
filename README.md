@@ -37,8 +37,8 @@
 ### 导入项目
 
 ```bash
-git clone https://github.com/quyiting/da-ke-bu-bi-suan.git
-cd da-ke-bu-bi-suan
+git clone https://github.com/quyiting/fortune-reading-miniapp.git
+cd fortune-reading-miniapp
 ```
 
 1. 在微信开发者工具中导入仓库根目录，项目类型选择“小程序”。
@@ -125,7 +125,7 @@ python3 scripts/fetch-tarot-assets.py
 
 ## 参与贡献
 
-欢迎通过 [Issues](https://github.com/quyiting/da-ke-bu-bi-suan/issues) 报告问题或讨论功能，通过 Pull Request 提交改进。
+欢迎通过 [Issues](https://github.com/quyiting/fortune-reading-miniapp/issues) 报告问题或讨论功能，通过 Pull Request 提交改进。
 
 1. Fork 仓库并创建独立分支。
 2. 保持改动范围清楚；行为修改请补充对应的回归检查，规则或历法修正请给出依据与可复现案例。
