@@ -62,7 +62,7 @@
         ><image
           wx:if="{{item.revealed}}"
           class="tarot-image {{item.reversed ? 'reversed' : ''}}"
-          src="{{item.image}}"
+          src="{{tarotCardImages[item.id]}}"
           mode="aspectFit"
         /><view wx:else class="tarot-back">✦</view
         ><view class="tarot-name"

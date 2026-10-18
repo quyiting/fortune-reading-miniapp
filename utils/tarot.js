@@ -1,4 +1,8 @@
 const { deck } = require("./tarot-data");
+const tarotCardImages = deck.reduce((images, card) => {
+  images[card.id] = `/packages/tarot/cards/${card.id}.jpg`;
+  return images;
+}, {});
 function buildTarotReading(input, random = Math.random) {
   if (!["one", "three"].includes(input.spread))
     throw new Error("请选择单张或三张牌阵");
@@ -21,7 +25,7 @@ function buildTarotReading(input, random = Math.random) {
       position,
       index: i,
       meaning: reversed ? card.reversed : card.upright,
-      image: `/packages/tarot/cards/${card.id}.webp`,
+      image: tarotCardImages[card.id],
     };
   });
   return {
@@ -55,4 +59,4 @@ function buildTarotReading(input, random = Math.random) {
     ],
   };
 }
-module.exports = { deck, buildTarotReading };
+module.exports = { deck, buildTarotReading, tarotCardImages };

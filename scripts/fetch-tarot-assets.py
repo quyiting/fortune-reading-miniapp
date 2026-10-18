@@ -35,14 +35,16 @@ with tempfile.TemporaryDirectory(prefix='dakb-tarot-') as directory:
         raw = get(image.get('thumburl') or image['url'])
         source = temporary/(card['id'] + '.jpg')
         source.write_bytes(raw)
-        subprocess.run(['node', str(ROOT/'scripts/resize-tarot.cjs'), str(source), str(output/(card['id']+'.webp'))], check=True)
+        subprocess.run(['node', str(ROOT/'scripts/resize-tarot.cjs'), str(source), str(output/(card['id']+'.jpg'))], check=True)
         meta = image['extmetadata']
-        return {'id':card['id'],'file':card['id']+'.webp','commonsTitle':'File:'+card['file'],
+        return {'id':card['id'],'file':card['id']+'.jpg','commonsTitle':'File:'+card['file'],
                 'sourcePage':image['descriptionurl'],'sourceImage':image['url'],'license':'Public domain',
                 'licenseUrl':meta.get('LicenseUrl',{}).get('value','https://creativecommons.org/publicdomain/mark/1.0/'),
                 'artist':plain(meta.get('Artist',{}).get('value','Pamela Colman Smith / Arthur Edward Waite')),
-                'sha256':hashlib.sha256((output/(card['id']+'.webp')).read_bytes()).hexdigest()}
+                'sha256':hashlib.sha256((output/(card['id']+'.jpg')).read_bytes()).hexdigest()}
     with ThreadPoolExecutor(max_workers=3) as executor:
         manifest = list(executor.map(download, deck))
-(ROOT/'packages/tarot/ASSET_SOURCES.json').write_text(json.dumps({'retrieved':'2026-10-18','processing':'250px Commons preview, WebP quality 52, maximum width 200; no recoloring','cards':manifest},ensure_ascii=False,indent=2)+'\n')
-print('Verified and bundled',len(manifest),'cards;',sum(p.stat().st_size for p in output.glob('*.webp')),'bytes')
+(ROOT/'packages/tarot/ASSET_SOURCES.json').write_text(json.dumps({'retrieved':'2026-10-18','processing':'250px Commons preview, JPEG quality 65 (mozjpeg), maximum width 200; no recoloring','cards':manifest},ensure_ascii=False,indent=2)+'\n')
+for old in output.glob('*.webp'):
+    old.unlink()
+print('Verified and bundled',len(manifest),'cards;',sum(p.stat().st_size for p in output.glob('*.jpg')),'bytes')

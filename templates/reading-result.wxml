@@ -42,7 +42,7 @@
       <view class="section-mini">{{item.position}}</view>
       <image
         class="tarot-image {{item.reversed ? 'reversed' : ''}}"
-        src="{{item.image}}"
+        src="{{tarotCardImages[item.id]}}"
         mode="aspectFit"
         show-menu-by-longpress="true"
         aria-label="{{item.name}} {{item.orientation}}"

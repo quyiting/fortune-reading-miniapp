@@ -1,10 +1,12 @@
-const { buildTarotReading } = require("../../../utils/tarot");
+const { buildTarotReading, tarotCardImages } = require("../../../utils/tarot");
 const { readingData, readingMethods } = require("../../../utils/reading-page");
 const { confirmHistoryCapacity } = require("../../../utils/history-capacity");
 const { methods, openMethod } = require("../../../utils/method-navigation");
 Page({
   data: {
     ...readingData,
+    // Resolve images for old WebP snapshots without rewriting their saved result.
+    tarotCardImages,
     methodId: "tarot",
     methods,
     spread: "three",
