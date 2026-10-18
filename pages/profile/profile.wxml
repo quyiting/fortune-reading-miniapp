@@ -8,9 +8,9 @@
     <view class="capacity-notice" wx:if="{{capacity.isNearLimit}}">{{capacity.isFull ? "记录已满，下次保存前会询问是否替换最久未更新的一条。" : "还可保存 " + capacity.remaining + " 条，可以删除不需要的记录。"}}</view>
   </view>
 
-  <view class="filter-row">
-    <button wx:for="{{filterOptions}}" wx:key="id" class="filter-chip {{activeFilter === item.id ? 'active' : ''}}" data-filter="{{item.id}}" bindtap="setFilter" aria-pressed="{{activeFilter === item.id}}">{{item.label}}</button>
-  </view>
+  <picker mode="selector" range="{{filterOptions}}" range-key="label" value="{{activeFilterIndex}}" bindchange="handleFilterChange">
+    <view class="history-filter">分类：{{filterOptions[activeFilterIndex].label}} <text>⌄</text></view>
+  </picker>
 
   <view class="history-stack" wx:if="{{filteredHistory.length}}">
     <view class="history-item" wx:for="{{filteredHistory}}" wx:key="id">
@@ -26,6 +26,7 @@
         <button wx:if="{{item.hasResult}}" class="text-button history-open" data-id="{{item.id}}" bindtap="handleOpenRecord">查看结果</button>
         <view wx:else class="legacy-note">仅保存了摘要</view>
         <button wx:if="{{item.type === 'yao'}}" class="text-button" data-id="{{item.id}}" bindtap="handleReviewToggle" aria-expanded="{{expandedReviewId === item.id}}">{{expandedReviewId === item.id ? '收起回访' : '回访'}}</button>
+        <button wx:if="{{item.type !== 'yao'}}" class="text-button" data-id="{{item.id}}" bindtap="handleEditReviewNote">{{item.reviewNote ? '编辑备注' : '备注'}}</button>
         <button class="text-button delete-button" data-id="{{item.id}}" bindtap="handleDeleteRecord">删除</button>
       </view>
       <view class="review-panel" wx:if="{{item.type === 'yao' && expandedReviewId === item.id}}">
@@ -50,8 +51,8 @@
     <view class="section-title">记录统计</view>
     <view class="stats-grid">
       <view><view class="stat-value">{{summary.drawCount}}</view><view class="stat-label">抽签</view></view>
-      <view><view class="stat-value">{{summary.yaoCount}}</view><view class="stat-label">问事</view></view>
-      <view><view class="stat-value">{{summary.exploreDays}}</view><view class="stat-label">探索天数</view></view>
+      <view><view class="stat-value">{{summary.questionCount}}</view><view class="stat-label">问事</view></view>
+      <view><view class="stat-value">{{summary.natalCount}}</view><view class="stat-label">命盘</view></view>
     </view>
     <view class="review-overview">待回看 {{summary.pendingReviewCount}} · 部分应 {{summary.partialReviewCount}} · 已应 {{summary.matchedReviewCount}} · 暂未应 {{summary.unmetReviewCount}}</view>
   </view>

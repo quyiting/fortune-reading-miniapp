@@ -1,3 +1,4 @@
+@import "../../styles/method-tabs.wxss";
 .selector-card,
 .detail-bridge,
 .oracle-card,

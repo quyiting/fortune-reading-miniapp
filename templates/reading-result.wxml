@@ -1,0 +1,188 @@
+<view class="reading-result" wx:if="{{result}}">
+  <view class="result-state"
+    >{{isViewingRecord ? '回看原结果' : '本次结果'}} · {{recordSaved ?
+    '已保存在本机' : '尚未保存'}}</view
+  >
+  <view class="hero-title result-title">{{result.title}}</view>
+  <view class="subtle-note">{{result.subtitle}}</view>
+  <view class="reading-question" wx:if="{{result.question}}"
+    >{{result.question}}</view
+  >
+
+  <view class="hexagram-grid" wx:if="{{result.type === 'meihua'}}">
+    <view
+      class="hexagram-mini"
+      wx:for="{{[result.original,result.mutual,result.changed]}}"
+      wx:for-index="hexIndex"
+      wx:key="kind"
+    >
+      <view class="section-mini">{{item.kind}}</view>
+      <view class="hexagram-lines">
+        <view
+          wx:for="{{item.lines}}"
+          wx:for-item="line"
+          wx:key="position"
+          class="hexagram-line {{hexIndex === 0 && line.position === result.movingLine ? 'moving' : ''}}"
+          ><view></view><view class="{{line.isYang ? 'yang-half' : ''}}"></view
+        ></view>
+      </view>
+      <view class="hexagram-name">{{item.title}}</view>
+    </view>
+  </view>
+  <view class="subtle-note" wx:if="{{result.type === 'meihua'}}"
+    >{{result.movingLine}}爻动 · 体 {{result.bodyLabel}} · 用
+    {{result.useLabel}}</view
+  >
+
+  <view
+    class="tarot-result-grid {{result.cards.length === 1 ? 'single' : ''}}"
+    wx:if="{{result.type === 'tarot'}}"
+  >
+    <view wx:for="{{result.cards}}" wx:key="id" class="tarot-result-card">
+      <view class="section-mini">{{item.position}}</view>
+      <image
+        class="tarot-image {{item.reversed ? 'reversed' : ''}}"
+        src="{{item.image}}"
+        mode="aspectFit"
+        show-menu-by-longpress="true"
+        aria-label="{{item.name}} {{item.orientation}}"
+      />
+      <view class="tarot-name">{{item.name}}</view
+      ><view class="section-mini">{{item.orientation}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{result.type === 'bazi'}}" class="natal-card">
+    <view class="pillar-grid">
+      <view class="pillar" wx:for="{{result.pillars}}" wx:key="label">
+        <view class="section-mini">{{item.label}}</view
+        ><view class="pillar-god">{{item.tenGod}}</view>
+        <view class="pillar-character">{{item.gan}}</view
+        ><view class="pillar-character">{{item.zhi}}</view>
+        <view class="section-mini">{{item.element}}</view>
+      </view>
+    </view>
+    <view class="elements-row"
+      ><view wx:for="{{result.elements}}" wx:key="name"
+        >{{item.name}} <text>{{item.count}}</text></view
+      ></view
+    >
+    <view class="subtle-note"
+      >仅统计天干、地支本气数量，不代表旺衰或喜用神。</view
+    >
+  </view>
+
+  <block wx:if="{{result.type === 'ziwei'}}">
+    <view class="palace-grid">
+      <view class="palace-center"
+        ><view class="section-title">{{result.fiveElementsClass}}</view
+        ><view>命主 {{result.soul}}</view><view>身主 {{result.body}}</view
+        ><view class="section-mini">寅宫起固定位置</view></view
+      >
+      <view
+        wx:for="{{result.palaces}}"
+        wx:key="index"
+        class="palace-cell {{item.name === '命宫' ? 'life-palace' : ''}}"
+        style="grid-row:{{item.row}};grid-column:{{item.column}};"
+      >
+        <view class="palace-name"
+          >{{item.name}}<text wx:if="{{item.isBody}}"> · 身</text></view
+        >
+        <view class="palace-stars">{{item.starLabel}}</view
+        ><view class="palace-branch">{{item.stemBranch}}</view>
+      </view>
+    </view>
+    <view class="subtle-note"
+      >完整星曜、亮度、四化和大限可在下方「展开排盘详情」查看。</view
+    >
+  </block>
+
+  <view class="reading-summary">{{result.summary}}</view>
+  <view class="reading-section" wx:for="{{result.sections}}" wx:key="title"
+    ><view class="section-title">{{item.title}}</view
+    ><view class="result-copy">{{item.body}}</view></view
+  >
+  <button
+    class="text-button details-toggle"
+    bindtap="handleReadingDetails"
+    aria-expanded="{{showReadingDetails}}"
+  >
+    {{showReadingDetails ? '收起排盘详情 −' : '展开排盘详情 ＋'}}
+  </button>
+  <view class="reading-details" wx:if="{{showReadingDetails}}">
+    <view wx:for="{{result.details}}" wx:key="label" class="detail-item"
+      ><view class="section-mini">{{item.label}}</view
+      ><view class="result-copy">{{item.value}}</view></view
+    >
+    <block wx:if="{{result.type === 'bazi'}}">
+      <view class="detail-item" wx:for="{{result.pillars}}" wx:key="label"
+        ><view>{{item.label}} {{item.value}} · {{item.naYin}}</view
+        ><view class="subtle-note"
+          >藏干 {{item.hidden}} · 藏干十神 {{item.hiddenGods}}</view
+        ></view
+      >
+      <view class="detail-item" wx:if="{{result.cycles.length}}"
+        ><view class="section-title">大运 · {{result.startDate}} 起运</view
+        ><view class="cycle-row" wx:for="{{result.cycles}}" wx:key="startYear"
+          ><text>{{item.value}}</text
+          ><text>{{item.startYear}}—{{item.endYear}}年</text></view
+        ></view
+      >
+    </block>
+    <view class="detail-item" wx:for="{{result.palaces}}" wx:key="index">
+      <view
+        >{{item.name}} {{item.isBody ? '· 身宫' : ''}} · {{item.stemBranch}} ·
+        大限 {{item.decadal}}</view
+      >
+      <view class="star-detail"
+        ><text wx:for="{{item.majorStars}}" wx:for-item="star" wx:key="name"
+          >{{star.name}} {{star.brightness}} {{star.mutagen ? '化' +
+          star.mutagen : ''}}　</text
+        ></view
+      >
+      <view class="subtle-note"
+        ><text wx:for="{{item.minorStars}}" wx:for-item="star" wx:key="name"
+          >{{star.name}} {{star.brightness}} {{star.mutagen ? '化' +
+          star.mutagen : ''}}　</text
+        ></view
+      >
+      <view class="subtle-note"
+        ><text
+          wx:for="{{item.adjectiveStars}}"
+          wx:for-item="star"
+          wx:key="*this"
+          >{{star}}　</text
+        ></view
+      >
+    </view>
+  </view>
+  <view class="reading-rules">{{result.ruleNote}}</view>
+  <view class="reading-actions"
+    ><button class="primary-button" bindtap="handlePosterOpen">保存海报</button
+    ><button class="secondary-button" bindtap="handleNewReading">
+      {{result.type === 'bazi' || result.type === 'ziwei' ? '修改资料' :
+      '再问一次'}}
+    </button></view
+  >
+  <button
+    wx:if="{{!recordSaved}}"
+    class="secondary-button retry-save"
+    bindtap="handleRetrySave"
+  >
+    重试保存到记录
+  </button>
+  <view class="review-note-display" wx:if="{{activeReviewNote}}"
+    ><view class="section-mini">我的备注</view
+    ><view class="review-note-copy">{{activeReviewNote}}</view></view
+  >
+  <button
+    wx:if="{{recordSaved}}"
+    class="text-button details-toggle"
+    bindtap="handleEditReviewNote"
+  >
+    {{activeReviewNote ? '编辑备注' : '添加备注'}}
+  </button>
+  <view class="subtle-note reading-disclaimer"
+    >传统文化娱乐与自我探索参考，不替代现实判断。</view
+  >
+</view>

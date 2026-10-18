@@ -1,0 +1,168 @@
+<view class="page-shell systems-page">
+  <block wx:if="{{!result}}">
+    <view class="system-switch"
+      ><button
+        class="system-choice {{systemId === 'bazi' ? 'active' : ''}}"
+        data-system="bazi"
+        bindtap="handleSystem"
+        aria-pressed="{{systemId === 'bazi'}}"
+      >
+        八字</button
+      ><button
+        class="system-choice {{systemId === 'ziwei' ? 'active' : ''}}"
+        data-system="ziwei"
+        bindtap="handleSystem"
+        aria-pressed="{{systemId === 'ziwei'}}"
+      >
+        紫微斗数
+      </button></view
+    >
+    <view class="hero-title"
+      >{{systemId === 'bazi' ? '看看自己的节奏' : '认识十二宫的自己'}}</view
+    ><view class="hero-copy">填入出生信息，生成一张本机命盘。</view>
+    <view class="panel-card form-card">
+      <view class="form-field"
+        ><view class="form-label">出生日期</view
+        ><view class="system-switch date-switch"
+          ><button
+            class="system-choice {{dateType === 'solar' ? 'active' : ''}}"
+            data-type="solar"
+            bindtap="handleDateType"
+          >
+            公历</button
+          ><button
+            class="system-choice {{dateType === 'lunar' ? 'active' : ''}}"
+            data-type="lunar"
+            bindtap="handleDateType"
+          >
+            农历
+          </button></view
+        >
+        <picker
+          wx:if="{{dateType === 'solar'}}"
+          mode="date"
+          start="1900-01-01"
+          end="2100-12-31"
+          value="{{birthDate}}"
+          bindchange="handleDate"
+          ><view class="picker-value"
+            >{{birthDate || '请选择公历出生日期'}}　⌄</view
+          ></picker
+        >
+        <block wx:else
+          ><view class="lunar-grid"
+            ><view
+              ><input
+                class="form-input"
+                type="number"
+                maxlength="4"
+                placeholder="年"
+                value="{{lunarYear}}"
+                data-part="lunarYear"
+                bindinput="handleLunarPart" /></view
+            ><view
+              ><input
+                class="form-input"
+                type="number"
+                maxlength="2"
+                placeholder="月"
+                value="{{lunarMonth}}"
+                data-part="lunarMonth"
+                bindinput="handleLunarPart" /></view
+            ><view
+              ><input
+                class="form-input"
+                type="number"
+                maxlength="2"
+                placeholder="日"
+                value="{{lunarDay}}"
+                data-part="lunarDay"
+                bindinput="handleLunarPart" /></view></view
+          ><label class="switch-row"
+            ><view class="switch-label">农历闰月</view
+            ><switch
+              checked="{{isLeap}}"
+              color="#995239"
+              bindchange="handleLeap" /></label
+        ></block>
+      </view>
+      <view class="form-field"
+        ><view class="form-label"
+          >出生时刻 <text class="optional">北京时间</text></view
+        ><picker
+          mode="time"
+          value="{{birthTime}}"
+          disabled="{{unknownTime}}"
+          bindchange="handleTime"
+          ><view class="picker-value"
+            >{{unknownTime ? '出生时刻未知' : birthTime ||
+            '请选择出生时刻'}}　⌄</view
+          ></picker
+        ><label class="switch-row"
+          ><view class="switch-label">不确定出生时刻</view
+          ><switch
+            checked="{{unknownTime}}"
+            color="#995239"
+            bindchange="handleUnknown" /></label
+        ><view class="subtle-note" wx:if="{{unknownTime}}"
+          >{{systemId === 'bazi' ?
+          '只展示三柱参考，不排时柱和起运；节气交接日仍需补充时刻核对。' :
+          '紫微排盘需要出生时辰，请补充后再生成。'}}</view
+        ></view
+      >
+      <view class="form-field"
+        ><view class="form-label">排盘性别</view
+        ><picker
+          mode="selector"
+          range="{{genders}}"
+          value="{{genderIndex < 0 ? 0 : genderIndex}}"
+          bindchange="handleGender"
+          ><view class="picker-value"
+            >{{genderIndex < 0 ? '请选择排盘性别' :
+            genders[genderIndex]}}　⌄</view
+          ></picker
+        ><view class="subtle-note">用于传统排盘中的大运顺逆等规则。</view></view
+      >
+      <view class="profile-consent"
+        ><label class="switch-row"
+          ><view class="switch-label">保存出生资料，下次自动填入</view
+          ><switch
+            checked="{{saveProfile}}"
+            color="#995239"
+            bindchange="handleSaveProfile" /></label
+        ><view class="subtle-note"
+          >仅保存在本机，八字和紫微共用。生成时未勾选会移除已存资料。命盘记录会保留本次出生信息，可在记录页单独删除。</view
+        ></view
+      >
+      <button
+        class="primary-button form-submit"
+        bindtap="handleGenerate"
+        disabled="{{systemId === 'ziwei' && unknownTime}}"
+      >
+        生成{{systemId === 'bazi' ? '八字' : '紫微'}}命盘
+      </button>
+      <button
+        wx:if="{{hasSavedProfile}}"
+        class="text-button delete-profile"
+        bindtap="handleDeleteProfile"
+      >
+        删除已保存的出生资料
+      </button>
+      <button
+        class="text-button details-toggle"
+        bindtap="handleRulesToggle"
+        aria-expanded="{{showRules}}"
+      >
+        {{showRules ? '收起时间与排盘规则 −' : '查看时间与排盘规则 ＋'}}
+      </button>
+      <view wx:if="{{showRules}}" class="subtle-note"
+        >支持1900—2100年。按北京时间 UTC+8
+        标准时，不做真太阳时及历史夏令时校正。八字以节气划分年、月，零点换日；紫微按农历年界、晚子时当日、闰月中分规则排盘。不同流派可能有差异。</view
+      >
+    </view>
+  </block>
+  <view class="subtle-note" wx:if="{{profileNotice}}">{{profileNotice}}</view>
+  <include src="../../templates/reading-result.wxml" />
+</view>
+<include src="../../templates/review-note.wxml" />
+<include src="../../templates/poster.wxml" />

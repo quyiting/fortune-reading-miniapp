@@ -1,0 +1,12 @@
+<view class="method-tabs" role="tablist" aria-label="问事方式">
+  <button
+    wx:for="{{methods}}"
+    wx:key="id"
+    class="method-button {{methodId === item.id ? 'active' : ''}}"
+    data-method="{{item.id}}"
+    bindtap="handleOpenMethod"
+    aria-pressed="{{methodId === item.id}}"
+  >
+    {{item.label}}
+  </button>
+</view>

@@ -42,9 +42,42 @@
       {
         "value": "tests",
         "type": "folder"
+      },
+      {
+        "type": "folder",
+        "value": "docs"
+      },
+      {
+        "type": "folder",
+        "value": "scripts"
+      },
+      {
+        "type": "file",
+        "value": "package.json"
+      },
+      {
+        "type": "file",
+        "value": "package-lock.json"
+      },
+      {
+        "type": "file",
+        "value": "packages/tarot/ASSET_SOURCES.json"
       }
     ],
-    "include": []
+    "include": [
+      {
+        "type": "folder",
+        "value": "licenses"
+      },
+      {
+        "type": "file",
+        "value": "LICENSE"
+      },
+      {
+        "type": "file",
+        "value": "THIRD_PARTY_NOTICES.md"
+      }
+    ]
   },
   "editorSetting": {}
 }

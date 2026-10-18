@@ -1,0 +1,26 @@
+.method-tabs {
+  display: flex;
+  gap: 8rpx;
+  padding: 8rpx;
+  margin-bottom: 32rpx;
+  background: #eeede8;
+  border-radius: 18rpx;
+}
+.method-tabs .method-button {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 12rpx 8rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  border-radius: 12rpx;
+  background: transparent;
+  color: var(--muted);
+}
+.method-tabs .method-button.active {
+  background: #fff;
+  color: var(--accent);
+  font-weight: 600;
+}

@@ -1,7 +1,7 @@
 <view class="page-shell index-page">
   <view class="page-heading">
     <view class="hero-title">给自己一点时间</view>
-    <view class="hero-copy">抽一签，问一事，记下此刻。</view>
+    <view class="hero-copy">问一件事，看看自己，记下此刻。</view>
   </view>
 
   <view class="daily-card">
@@ -16,15 +16,16 @@
   </view>
 
   <view class="home-entry-grid">
-    <button class="entry-button" bindtap="handleOpenDraw">
-      <view class="entry-title">主题抽签 <text class="entry-arrow">›</text></view>
-      <view class="entry-copy">为在意的事找一句提醒</view>
-    </button>
     <button class="entry-button" bindtap="handleOpenYao">
-      <view class="entry-title">六爻问事 <text class="entry-arrow">›</text></view>
-      <view class="entry-copy">带着一个具体问题来</view>
+      <view class="entry-title">问一件事 <text class="entry-arrow">›</text></view>
+      <view class="entry-copy">六爻 · 梅花 · 塔罗</view>
+    </button>
+    <button class="entry-button" bindtap="handleOpenNatal">
+      <view class="entry-title">看看命盘 <text class="entry-arrow">›</text></view>
+      <view class="entry-copy">八字 · 紫微斗数</view>
     </button>
   </view>
+  <button class="text-button theme-lot-link" bindtap="handleOpenDraw">有具体方向？去抽主题签 ›</button>
 
   <view class="recent-section" wx:if="{{hasHistory}}">
     <view class="recent-heading">

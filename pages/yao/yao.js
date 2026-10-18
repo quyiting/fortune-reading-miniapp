@@ -1,3 +1,4 @@
+const { methods, openMethod } = require("../../utils/method-navigation");
 const { yaoTopics } = require("../../utils/yao-data");
 const { buildSixYaoReading } = require("../../utils/yao");
 const { addHistory, createHistoryEntry, getHistoryEntry, getReviewMeta, saveReviewNote, updateHistoryEntry } = require("../../utils/history");
@@ -309,6 +310,8 @@ function consumePendingIntent(page) {
 
 Page({
   data: {
+    methods,
+    methodId: "yao",
     activeRecordId: "",
     activeReviewLabel: buildReviewState().activeReviewLabel,
     activeReviewStatus: buildReviewState().activeReviewStatus,
@@ -339,6 +342,8 @@ Page({
     showDetailedResult: false,
     yaoTopics,
   },
+
+  handleOpenMethod: openMethod,
 
   onShow() {
     const recordId = wx.getStorageSync(PENDING_RECORD_KEY);

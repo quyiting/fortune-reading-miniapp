@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/draw/draw",
     "pages/yao/yao",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/meihua/meihua",
+    "pages/natal/natal"
   ],
   "window": {
     "navigationBarTitleText": "大可不必算",
@@ -27,11 +29,23 @@
         "text": "问事"
       },
       {
+        "pagePath": "pages/natal/natal",
+        "text": "命盘"
+      },
+      {
         "pagePath": "pages/profile/profile",
         "text": "记录"
       }
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "subPackages": [
+    {
+      "root": "packages/tarot",
+      "pages": [
+        "pages/reading"
+      ]
+    }
+  ]
 }

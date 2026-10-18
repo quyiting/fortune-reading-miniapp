@@ -1,4 +1,5 @@
 <view class="page-shell yao-page">
+  <include wx:if="{{!result && !isCasting}}" src="../../templates/method-tabs.wxml" />
   <view class="yao-hero" wx:if="{{!result}}">
     <view class="hero-title">问一件在意的事</view>
     <view class="hero-copy">选个方向，把问题写下来。</view>

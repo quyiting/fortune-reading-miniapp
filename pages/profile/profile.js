@@ -6,7 +6,11 @@ const { openRecord } = require("../../utils/record-navigation");
 const filterOptions = [
   { id: "all", label: "全部" },
   { id: "draw", label: "抽签" },
-  { id: "yao", label: "问事" },
+  { id: "yao", label: "六爻" },
+  { id: "meihua", label: "梅花" },
+  { id: "tarot", label: "塔罗" },
+  { id: "bazi", label: "八字" },
+  { id: "ziwei", label: "紫微" },
 ];
 const reviewOptions = [
   { id: "pending", label: "待回看" },
@@ -47,6 +51,7 @@ function getVisibleHistory(history = getHistory()) {
 Page({
   data: {
     activeFilter: "all",
+    activeFilterIndex: 0,
     showStats: false,
     expandedReviewId: "",
     capacity: { total: 0, limit: 20, remaining: 20, isNearLimit: false, isFull: false },
@@ -101,6 +106,11 @@ Page({
     this.applyFilter(filter);
   },
 
+  handleFilterChange(event) {
+    const option = filterOptions[Number(event.detail.value)];
+    if (option) this.applyFilter(option.id);
+  },
+
   handleReviewToggle(event) {
     const { id } = event.currentTarget.dataset;
     this.setData({ expandedReviewId: this.data.expandedReviewId === id ? "" : id });
@@ -119,6 +129,7 @@ Page({
 
     this.setData({
       activeFilter: filter,
+      activeFilterIndex: Math.max(0, filterOptions.findIndex(option => option.id === filter)),
       filteredHistory,
     });
   },
@@ -152,7 +163,7 @@ Page({
 
   handleEditReviewNote(event) {
     const entry = getHistoryEntry(event.currentTarget.dataset.id);
-    if (!entry || entry.type !== "yao") return;
+    if (!entry || entry.type === "chart") return;
     this.setData({ editingReviewId: entry.id, reviewNoteDraft: entry.reviewNote });
   },
 

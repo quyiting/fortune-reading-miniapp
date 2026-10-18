@@ -1,0 +1,53 @@
+<view class="page-shell systems-page">
+  <include wx:if="{{!result}}" src="../../templates/method-tabs.wxml" />
+  <block wx:if="{{!result}}">
+    <view class="hero-title">从两个数字开始</view
+    ><view class="hero-copy">心里想一件事，写下先想到的数字。</view>
+    <view class="panel-card form-card">
+      <view class="form-field"
+        ><view class="form-label"
+          >想问什么 <text class="optional">可选</text></view
+        ><textarea
+          class="question-input"
+          value="{{questionInput}}"
+          maxlength="60"
+          placeholder="例如：这次合作，我可以先做什么？"
+          bindinput="handleQuestionInput"
+        />
+      </view>
+      <view class="form-field form-grid">
+        <view
+          ><view class="form-label">第一个数字</view
+          ><input
+            class="form-input"
+            type="number"
+            maxlength="3"
+            placeholder="1—999"
+            value="{{first}}"
+            data-field="first"
+            bindinput="handleNumberInput"
+        /></view>
+        <view
+          ><view class="form-label">第二个数字</view
+          ><input
+            class="form-input"
+            type="number"
+            maxlength="3"
+            placeholder="1—999"
+            value="{{second}}"
+            data-field="second"
+            bindinput="handleNumberInput"
+        /></view>
+      </view>
+      <button class="primary-button form-submit" bindtap="handleGenerate">
+        起一卦
+      </button>
+      <view class="subtle-note"
+        >采用数字起卦：两数定上下卦，加当前北京时间时支定动爻。结果会显示本卦、互卦、变卦及计算规则。</view
+      >
+    </view>
+  </block>
+  <include src="../../templates/reading-result.wxml" />
+</view>
+<include src="../../templates/review-note.wxml" />
+<include src="../../templates/poster.wxml" />

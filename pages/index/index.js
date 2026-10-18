@@ -8,6 +8,7 @@ const PENDING_YAO_INTENT_KEY = "fortune-pending-yao-intent";
 const tabPages = new Set([
   "/pages/index/index",
   "/pages/yao/yao",
+  "/pages/natal/natal",
   "/pages/profile/profile",
 ]);
 
@@ -59,7 +60,8 @@ function buildRecentCard(history = [], summary = {}) {
   }
 
   return {
-    actionLabel: "去我的记录",
+    actionLabel: recentEntry.result ? "回看完整结果" : "去我的记录",
+    recordId: recentEntry.result ? recentEntry.id : "",
     body: recentEntry.summary,
     eyebrow: "最近留下的记录",
     mode: "switchTab",
@@ -112,6 +114,11 @@ Page({
       questionInput: "",
     });
     wx.switchTab({ url: "/pages/yao/yao" });
+  },
+
+  handleOpenNatal() {
+    wx.removeStorageSync("fortune-pending-natal-record-id");
+    wx.switchTab({ url: "/pages/natal/natal" });
   },
 
   handleOpenDraw() {

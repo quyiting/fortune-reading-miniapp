@@ -1,0 +1,79 @@
+<view class="page-shell systems-page">
+  <include
+    wx:if="{{!result && !drawnCards.length}}"
+    src="../../../templates/method-tabs.wxml"
+  />
+  <block wx:if="{{!result && !drawnCards.length}}">
+    <view class="hero-title">给当下一点启发</view
+    ><view class="hero-copy">带着问题抽牌，也可以只听一句提醒。</view>
+    <view class="panel-card form-card">
+      <view class="system-switch"
+        ><button
+          class="system-choice {{spread === 'one' ? 'active' : ''}}"
+          data-spread="one"
+          bindtap="handleSpread"
+          aria-pressed="{{spread === 'one'}}"
+        >
+          单张提醒</button
+        ><button
+          class="system-choice {{spread === 'three' ? 'active' : ''}}"
+          data-spread="three"
+          bindtap="handleSpread"
+          aria-pressed="{{spread === 'three'}}"
+        >
+          三张牌阵
+        </button></view
+      >
+      <view class="subtle-note"
+        >{{spread === 'three' ? '从现状、阻碍和建议三个角度看看这件事。' :
+        '适合轻量体验，留意此刻可以行动的一个方向。'}}</view
+      >
+      <view class="form-field"
+        ><view class="form-label"
+          >你的问题 <text class="optional">可选</text></view
+        ><textarea
+          class="question-input"
+          maxlength="60"
+          value="{{questionInput}}"
+          bindinput="handleQuestionInput"
+          placeholder="例如：面对新的机会，我需要留意什么？"
+        />
+      </view>
+      <button class="primary-button form-submit" bindtap="handleDraw">
+        抽牌</button
+      ><view class="subtle-note"
+        >78张经典插画牌，包含正逆位。翻开全部牌后，结果才会保存到本机。</view
+      >
+    </view>
+  </block>
+  <block wx:if="{{!result && drawnCards.length}}">
+    <view class="hero-title">慢慢翻开，看看此刻</view
+    ><view class="hero-copy">依次点开牌面。未翻完退出，本次不保存。</view>
+    <view class="tarot-result-grid {{drawnCards.length === 1 ? 'single' : ''}}">
+      <button
+        wx:for="{{drawnCards}}"
+        wx:key="id"
+        class="tarot-flip"
+        data-index="{{index}}"
+        bindtap="handleFlip"
+        aria-label="{{item.position + (item.revealed ? '已翻开' : '点击翻牌')}}"
+      >
+        <view class="section-mini">{{item.position}}</view
+        ><image
+          wx:if="{{item.revealed}}"
+          class="tarot-image {{item.reversed ? 'reversed' : ''}}"
+          src="{{item.image}}"
+          mode="aspectFit"
+        /><view wx:else class="tarot-back">✦</view
+        ><view class="tarot-name"
+          >{{item.revealed ? item.name : '点击翻牌'}}</view
+        ><view class="section-mini" wx:if="{{item.revealed}}"
+          >{{item.orientation}}</view
+        >
+      </button>
+    </view>
+  </block>
+  <include src="../../../templates/reading-result.wxml" />
+</view>
+<include src="../../../templates/review-note.wxml" />
+<include src="../../../templates/poster.wxml" />

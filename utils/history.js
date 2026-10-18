@@ -5,6 +5,10 @@ const TYPE_LABELS = {
   chart: "星盘",
   draw: "抽签",
   yao: "问事",
+  meihua: "梅花",
+  tarot: "塔罗",
+  bazi: "八字",
+  ziwei: "紫微",
 };
 const SYNC_STATUS_META = {
   failed: {
@@ -410,6 +414,8 @@ function summarizeHistory(history = getHistory()) {
 
   return {
     chartCount,
+    questionCount: safeHistory.filter(item => ["yao", "meihua", "tarot"].includes(item.type)).length,
+    natalCount: safeHistory.filter(item => ["bazi", "ziwei"].includes(item.type)).length,
     drawCount,
     exploreDays,
     favoriteType,

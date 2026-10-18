@@ -116,3 +116,13 @@
   color: var(--muted);
   font-size: 24rpx;
 }
+
+.index-page .theme-lot-link { width:100%; margin:8rpx 0 28rpx; text-align:left; }
+
+.index-page .entry-button,
+.index-page .daily-action,
+.index-page .recent-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
